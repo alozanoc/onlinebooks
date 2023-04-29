@@ -17,6 +17,8 @@ public class Book {
     @Column(nullable = false)
     public String author;
 
+    @Column(nullable = true)
+    public String genre;
     @Column(nullable = false)
     public String description;
 
@@ -95,5 +97,13 @@ public class Book {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

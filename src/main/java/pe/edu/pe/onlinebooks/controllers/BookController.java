@@ -1,12 +1,12 @@
 package pe.edu.pe.onlinebooks.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.pe.onlinebooks.models.Book;
 import pe.edu.pe.onlinebooks.services.BookService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
@@ -27,9 +27,15 @@ public class BookController {
         return ResponseEntity.ok(newBook);
     }
 
-    @GetMapping
-    @RequestMapping("/search")
-    public ResponseEntity<List<Book>> advanceSearch(@RequestParam String title) {
-        throw new RuntimeException("No implementado");
+    @GetMapping("/search")
+    public ResponseEntity<Page<Book>> advanceSearch(@RequestParam(defaultValue = "", required = false) String title,
+                                                    @RequestParam(defaultValue = "", required = false) String author,
+                                                    @RequestParam(required = false) String genre,
+                                                    @RequestParam(defaultValue = "0", required = false) Integer page,
+                                                    @RequestParam(defaultValue = "10", required = false) Integer pageSize) {
+        Page<Book> newBook = bookService.advanceSearch(title, author, genre,
+                PageRequest.of(page, pageSize)
+        );
+        return ResponseEntity.ok(newBook);
     }
 }
