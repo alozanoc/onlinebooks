@@ -10,9 +10,9 @@ import pe.edu.pe.onlinebooks.models.Book;
 public interface BookRepository extends CrudRepository<Book, Integer> {
 
     @Query("SELECT b FROM Book b WHERE " +
-            "b.title LIKE CONCAT('%', :title, '%') AND " +
-            "b.author LIKE CONCAT('%', :author, '%') AND " +
-            "(:genre IS NULL OR :genre = '' OR b.genre = :genre)"
+            "UPPER(b.title) LIKE UPPER(CONCAT('%', :title, '%')) AND " +
+            "UPPER(b.author) LIKE UPPER(CONCAT('%', :author, '%')) AND " +
+            "(:genre IS NULL OR :genre = '' OR UPPER(b.genre) = UPPER(:genre))"
     )
     Page<Book> advanceSearch(String title, String author, String genre, PageRequest page);
 }
