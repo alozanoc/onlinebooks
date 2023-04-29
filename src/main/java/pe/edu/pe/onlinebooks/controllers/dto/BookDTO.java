@@ -1,50 +1,38 @@
-package pe.edu.pe.onlinebooks.models;
+package pe.edu.pe.onlinebooks.controllers.dto;
 
 import jakarta.persistence.*;
+import pe.edu.pe.onlinebooks.models.Book;
+import pe.edu.pe.onlinebooks.models.Comment;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "books")
-public class Book {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class BookDTO {
     public Integer id;
-    @Column(nullable = false)
     public String title;
-
-    @Column(nullable = false)
     public String author;
-
-    @Column(nullable = true)
     public String genre;
-    @Column(nullable = false)
     public String description;
-
-    @Column(name = "image_url")
     public String imageUrl;
-
-    @Column(name = "created_at")
     public LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
     public LocalDateTime updatedAt;
+    public List<CommentDTO> comments;
 
-    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "book")
-    public List<Comment> comments;
-
-    public Book() {
+    public BookDTO() {
     }
 
-    public Book(String title, String author, String description, String imageUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public BookDTO(Book book) {
+        this.setId(book.getId());
+        this.setTitle(book.getTitle());
+        this.setAuthor(book.getAuthor());
+        this.setGenre(book.getGenre());
+        this.setDescription(book.getDescription());
+        this.setImageUrl(book.getImageUrl());
+        this.setCreatedAt(book.getCreatedAt());
+        this.setUpdatedAt(book.getUpdatedAt());
+
+        this.setComments(book.getComments().stream().map(it -> new CommentDTO(it)).toList());
+
     }
 
     public Integer getId() {
@@ -69,6 +57,14 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getDescription() {
@@ -103,19 +99,11 @@ public class Book {
         this.updatedAt = updatedAt;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public List<Comment> getComments() {
+    public List<CommentDTO> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
     }
 }

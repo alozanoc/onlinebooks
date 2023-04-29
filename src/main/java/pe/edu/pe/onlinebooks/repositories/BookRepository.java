@@ -3,11 +3,11 @@ package pe.edu.pe.onlinebooks.repositories;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import pe.edu.pe.onlinebooks.models.Book;
 
-public interface BookRepository extends CrudRepository<Book, Integer> {
+public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT b FROM Book b WHERE " +
             "UPPER(b.title) LIKE UPPER(CONCAT('%', :title, '%')) AND " +
