@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 import pe.edu.pe.onlinebooks.models.Book;
 import pe.edu.pe.onlinebooks.services.BookService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -23,5 +25,11 @@ public class BookController {
                                         @RequestParam MultipartFile image) {
         Book newBook = bookService.addBook(title, author, description, image);
         return ResponseEntity.ok(newBook);
+    }
+
+    @GetMapping
+    @RequestMapping("/search")
+    public ResponseEntity<List<Book>> advanceSearch(@RequestParam String title) {
+        throw new RuntimeException("No implementado");
     }
 }
