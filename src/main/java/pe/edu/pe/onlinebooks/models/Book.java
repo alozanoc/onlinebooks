@@ -112,6 +112,7 @@ public class Book {
     }
 
     public List<Comment> getComments() {
+
         return comments;
     }
 

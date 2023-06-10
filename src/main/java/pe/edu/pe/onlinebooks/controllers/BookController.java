@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pe.edu.pe.onlinebooks.controllers.dto.BookDTO;
 import pe.edu.pe.onlinebooks.models.Book;
 import pe.edu.pe.onlinebooks.services.BookService;
 
@@ -28,14 +29,15 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<Book>> advanceSearch(@RequestParam(defaultValue = "", required = false) String title,
-                                                    @RequestParam(defaultValue = "", required = false) String author,
-                                                    @RequestParam(required = false) String genre,
-                                                    @RequestParam(defaultValue = "0", required = false) Integer page,
-                                                    @RequestParam(defaultValue = "10", required = false) Integer pageSize) {
-        Page<Book> newBook = bookService.advanceSearch(title, author, genre,
+    public ResponseEntity<Page<BookDTO>> advanceSearch(@RequestParam(defaultValue = "", required = false) String title,
+                                                       @RequestParam(defaultValue = "", required = false) String author,
+                                                       @RequestParam(required = false) String genre,
+                                                       @RequestParam(defaultValue = "0", required = false) Integer page,
+                                                       @RequestParam(defaultValue = "10", required = false) Integer pageSize) {
+        Page<BookDTO> newBook = bookService.advanceSearch(title, author, genre,
                 PageRequest.of(page, pageSize)
-        );
+        ).map((Book it) -> new BookDTO(it));
+
         return ResponseEntity.ok(newBook);
     }
 }
