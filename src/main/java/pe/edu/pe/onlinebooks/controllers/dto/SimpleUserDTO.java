@@ -3,10 +3,12 @@ package pe.edu.pe.onlinebooks.controllers.dto;
 public class SimpleUserDTO {
     String username;
     String name;
+    String token;
 
-    public SimpleUserDTO(String username, String name) {
+    public SimpleUserDTO(String username, String name, String token) {
         this.username = username;
         this.name = name;
+        this.token = token;
     }
 
     public String getUsername() {
@@ -23,5 +25,13 @@ public class SimpleUserDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

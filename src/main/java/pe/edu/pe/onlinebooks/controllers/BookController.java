@@ -1,8 +1,13 @@
 package pe.edu.pe.onlinebooks.controllers;
 
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.pe.onlinebooks.controllers.dto.BookDTO;
@@ -34,6 +39,9 @@ public class BookController {
                                                        @RequestParam(required = false) String genre,
                                                        @RequestParam(defaultValue = "0", required = false) Integer page,
                                                        @RequestParam(defaultValue = "10", required = false) Integer pageSize) {
+
+        String currentUsername = (((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+
         Page<BookDTO> newBook = bookService.advanceSearch(title, author, genre,
                 PageRequest.of(page, pageSize)
         ).map((Book it) -> new BookDTO(it));

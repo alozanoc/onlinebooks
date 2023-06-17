@@ -1,4 +1,4 @@
-package pe.edu.pe.onlinebooks;
+package pe.edu.pe.onlinebooks.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
