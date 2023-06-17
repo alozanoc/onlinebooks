@@ -14,6 +14,13 @@ public class User {
     @Column(nullable = false)
     public String username;
 
+    @Column(nullable = false)
+    public String name;
+
+
+    @Column(nullable = false)
+    public String password;
+
     public Integer getId() {
         return id;
     }
@@ -28,5 +35,21 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
